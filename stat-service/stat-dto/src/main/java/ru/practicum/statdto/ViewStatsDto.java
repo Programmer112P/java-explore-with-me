@@ -1,10 +1,17 @@
 package ru.practicum.statdto;
 
-public interface ViewStatsDto {
+import lombok.*;
 
-    String getApp();
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class ViewStatsDto {
 
-    String getUri();
+    private String app;
 
-    Integer getHits();
+    private String uri;
+
+    private Long hits;
 }
