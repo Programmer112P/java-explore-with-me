@@ -1,32 +1,10 @@
 package ru.practicum.statdto;
 
-import lombok.*;
+public interface ViewStatsDto {
 
-import java.util.Objects;
+    String getApp();
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-public class ViewStatsDto {
+    String getUri();
 
-    private String app;
-
-    private String uri;
-
-    private Integer hits;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ViewStatsDto that = (ViewStatsDto) o;
-        return Objects.equals(app, that.app) && Objects.equals(uri, that.uri) && Objects.equals(hits, that.hits);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(app, uri, hits);
-    }
+    Integer getHits();
 }
