@@ -15,7 +15,7 @@ public class ViewStatsDto {
 
     private String uri;
 
-    private Long hits;
+    private Integer hits;
 
     @Override
     public boolean equals(Object o) {
