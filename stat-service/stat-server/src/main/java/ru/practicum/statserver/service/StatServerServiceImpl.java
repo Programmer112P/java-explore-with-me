@@ -1,6 +1,5 @@
 package ru.practicum.statserver.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.statdto.HitDto;
@@ -19,7 +18,6 @@ public class StatServerServiceImpl implements StatServerService {
     private final HitRepository hitRepository;
     private final HitMapper hitMapper;
 
-    @Autowired
     public StatServerServiceImpl(HitRepository hitRepository, HitMapper hitMapper) {
         this.hitRepository = hitRepository;
         this.hitMapper = hitMapper;

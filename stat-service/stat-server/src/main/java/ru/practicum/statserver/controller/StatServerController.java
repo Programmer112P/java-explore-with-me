@@ -11,7 +11,6 @@ import ru.practicum.statdto.ViewStatsDto;
 import ru.practicum.statserver.service.StatServerService;
 
 import javax.validation.Valid;
-import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class StatServerController {
 
     @GetMapping("/stats")
     public List<ViewStatsDto> getStats(
-            @RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") @PastOrPresent LocalDateTime start,
+            @RequestParam("start") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
             @RequestParam("end") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
             @RequestParam(required = false, defaultValue = "") List<String> uris,
             @RequestParam(required = false, defaultValue = "false") Boolean unique) {
