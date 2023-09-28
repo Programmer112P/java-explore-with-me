@@ -1,7 +1,6 @@
 package ru.practicum.mainservice.categories.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -27,7 +26,7 @@ public class CategoriesAdminController {
         this.categoriesService = categoriesService;
     }
 
-    @PostMapping()
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CategoryDto createCategory(@RequestBody @Valid NewCategoryDto newCategoryDto) {
         log.info("CategoryAdminController createCategory: request to create category {}", newCategoryDto);
@@ -45,11 +44,11 @@ public class CategoriesAdminController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable(name = "catId") Long id) {
         log.info("CategoryAdminController deleteCategory: request to delete category {}", id);
-        try {
+        try { // https://stackoverflow.com/questions/52456783/cannot-catch-dataintegrityviolationexception
             categoriesService.deleteCategory(id);
             log.info("CategoryAdminController deleteCategory: completed request to delete category {}", id);
-        } catch (ConstraintViolationException | DataIntegrityViolationException e) {
-            throw new ConflictException("");
+        } catch (DataIntegrityViolationException e) {
+            throw new ConflictException(e.getMessage());
         }
     }
 
@@ -57,14 +56,13 @@ public class CategoriesAdminController {
     public CategoryDto updateCategory(@PathVariable(name = "catId") Long id,
                                       @RequestBody @Valid CategoryDto categoryDto) {
         log.info("CategoryAdminController updateCategory: request to update category {}", id);
-        categoryDto.setId(id); // не понял зачем нужно отдельно это поле отдавать, если оно и так есть в DTO
-        try {
+        categoryDto.setId(id);
+        try { // https://stackoverflow.com/questions/52456783/cannot-catch-dataintegrityviolationexception
             CategoryDto response = categoriesService.updateCategory(categoryDto);
             log.info("CategoryAdminController updateCategory: completed request to update category {}", id);
             return response;
         } catch (DataIntegrityViolationException e) {
-            throw new ConflictException("Category with this name already exist");
+            throw new ConflictException(e.getMessage());
         }
-
     }
 }

@@ -61,6 +61,15 @@ CREATE TABLE IF NOT EXISTS view
     user_ip  VARCHAR(256)
 );
 
+CREATE TABLE IF NOT EXISTS comment
+(
+    id       BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    message  VARCHAR(500)                                   NOT NULL,
+    created  TIMESTAMP                                      NOT NULL,
+    event_id BIGINT REFERENCES event (id) ON DELETE CASCADE NOT NULL,
+    user_id  BIGINT REFERENCES users (id) ON DELETE CASCADE NOT NULL
+);
+
 ALTER TABLE view
     ADD CONSTRAINT fk_user_ip_unique UNIQUE (event_id, user_ip);
 
