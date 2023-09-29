@@ -44,7 +44,9 @@ public class CategoriesAdminController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCategory(@PathVariable(name = "catId") Long id) {
         log.info("CategoryAdminController deleteCategory: request to delete category {}", id);
-        try { // https://stackoverflow.com/questions/52456783/cannot-catch-dataintegrityviolationexception
+        // Эти исключения не перехватываются на уровне сервиса из-за @Transactional
+        // https://stackoverflow.com/questions/52456783/cannot-catch-dataintegrityviolationexception
+        try {
             categoriesService.deleteCategory(id);
             log.info("CategoryAdminController deleteCategory: completed request to delete category {}", id);
         } catch (DataIntegrityViolationException e) {
@@ -57,7 +59,9 @@ public class CategoriesAdminController {
                                       @RequestBody @Valid CategoryDto categoryDto) {
         log.info("CategoryAdminController updateCategory: request to update category {}", id);
         categoryDto.setId(id);
-        try { // https://stackoverflow.com/questions/52456783/cannot-catch-dataintegrityviolationexception
+        // Эти исключения не перехватываются на уровне сервиса из-за @Transactional
+        // https://stackoverflow.com/questions/52456783/cannot-catch-dataintegrityviolationexception
+        try {
             CategoryDto response = categoriesService.updateCategory(categoryDto);
             log.info("CategoryAdminController updateCategory: completed request to update category {}", id);
             return response;
